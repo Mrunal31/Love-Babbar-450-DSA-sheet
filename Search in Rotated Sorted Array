@@ -1,0 +1,48 @@
+class Solution {
+
+    private int getPivot(int[] nums){
+    
+        int s=0;
+        int e=nums.length-1;
+        int mid = s+(e-s)/2;
+        while(s<e){
+            if(nums[mid] >= nums[0]){
+                s=mid+1;
+            }
+            else{
+                e=mid;
+            }
+            mid=s+(e-s)/2;
+        }
+        return s;
+        
+    }
+
+    private int binarySearch(int[] nums,int target,int l,int r){
+    
+        if(l>r) return -1;
+        int mid = l+(r-l)/2;
+        if(nums[mid] == target){
+            return mid;
+        }
+        else if(nums[mid] > target){
+            return binarySearch(nums,target,l,mid-1);
+        }
+        else{
+            return binarySearch(nums,target,mid+1,r);
+        }
+        
+    }
+    public int search(int[] nums, int target) {
+    
+        int pivot = getPivot(nums);
+        int ans=0;
+
+        if(target >= nums[0]){
+           ans = binarySearch(nums,target,0,pivot);
+        } else{
+           ans = binarySearch(nums,target,pivot,nums.length-1);
+        }
+        return ans;
+    }
+}
